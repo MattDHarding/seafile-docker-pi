@@ -6,11 +6,46 @@ python: 2.7
 services:
   - docker
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+      - qemu-user-static
+env:
+  global:
+    - DOCKER_CLI_EXPERIMENTAL=enabled
+  matrix:
+    # - BASE_IMAGE_VERSION=18.04 PLATFORM=arm64 TAG_ARCH=arm64
+    - BASE_IMAGE_VERSION=18.04 PLATFORM=arm TAG_ARCH=arm
+
+stage: Compile
+
+before_script:
+  - echo '{"experimental":true}' | sudo tee /etc/docker/daemon.json
+  - sudo service docker restart
+
 install:
   - set -e
   - pip install -r ci/requirements.txt
   - pip install -r image/base/requirements.txt
+  - pip install docker-squash
 
 script:
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
   - ./run-tests.sh
   - ci/ci.sh
+  - cd image;
+    make push-base push-server;
+    make base-multiarch ARCHS="arm";
+    make server-multiarch ARCHS="arm"
+
+# Hopefully at somepoint in the future it will be possible to build this for ARM64, MariaDB currently fails the tests :(
+# jobs:
+#   include:
+#     - stage: deploy
+#       env:
+#         - ARCHS="amd64 arm64 arm"
+#       script:
+#         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+#         - cd image;
+#           make base-multiarch BASE_IMAGE_VERSION=18.04

@@ -1,6 +1,6 @@
 # Lastet phusion baseimage as of 20180412, based on ubuntu 18.04
 # See https://hub.docker.com/r/phusion/baseimage/tags/
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:master
 
 ENV UPDATED_AT=20180412 \
     DEBIAN_FRONTEND=noninteractive

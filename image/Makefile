@@ -17,9 +17,9 @@ all:
 	@echo
 
 base:
-	docker pull phusion/baseimage:0.11
-	docker-squash --tag phusion/baseimage:latest phusion/baseimage:0.11
-	docker tag phusion/baseimage:latest phusion/baseimage:0.11
+	docker pull phusion/baseimage:master
+	docker-squash --tag phusion/baseimage:latest phusion/baseimage:master
+	docker tag phusion/baseimage:latest phusion/baseimage:master
 	cd base && docker build -t $(base_image) .
 	docker-squash --tag $(base_image_squashed) $(base_image)
 	docker tag $(base_image_squashed) $(base_image)

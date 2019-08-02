@@ -18,12 +18,12 @@ all:
 
 base:
 	docker pull phusion/baseimage:master
-	# docker-squash --tag phusion/baseimage:latest phusion/baseimage:master
-	# docker tag phusion/baseimage:latest phusion/baseimage:master
+	docker-squash --tag phusion/baseimage:latest phusion/baseimage:master
+	docker tag phusion/baseimage:latest phusion/baseimage:master
 	cd base && docker build -t $(base_image) .
-	# docker-squash --tag $(base_image_squashed) $(base_image)
-	# docker tag $(base_image_squashed) $(base_image)
-	# docker rmi `docker images --filter "dangling=true" -q --no-trunc`
+	docker-squash --tag $(base_image_squashed) $(base_image)
+	docker tag $(base_image_squashed) $(base_image)
+	docker rmi `docker images --filter "dangling=true" -q --no-trunc`
 
 server:
 	cd seafile && cp -rf ../../scripts ./ && docker build -t $(server_image) .

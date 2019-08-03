@@ -3,7 +3,7 @@ WORKDIR /opt/seafile
 
 RUN mkdir -p /etc/my_init.d
 
-ENV SEAFILE_VERSION=6.3.4 SEAFILE_SERVER=seafile-server
+ENV SEAFILE_VERSION=7.0.1 SEAFILE_SERVER=seafile-server
 
 RUN mkdir -p /opt/seafile/ && \
     curl -sSL -o - https://github.com/haiwen/seafile-rpi/releases/download/v${SEAFILE_VERSION}/seafile-server_${SEAFILE_VERSION}_stable_pi.tar.gz \

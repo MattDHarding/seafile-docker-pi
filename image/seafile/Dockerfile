@@ -17,7 +17,7 @@ COPY templates /templates
 EXPOSE 80
 
 
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
-# CMD []
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+CMD []
 
-CMD ["/sbin/my_init", "--", "/scripts/start.py"]
+# CMD ["/sbin/my_init", "--", "/scripts/start.py"]

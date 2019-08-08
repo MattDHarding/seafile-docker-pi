@@ -1,4 +1,11 @@
-[![Build Status](https://secure.travis-ci.org/haiwen/seafile-docker.png?branch=master)](http://travis-ci.org/haiwen/seafile-docker)
+[![Build Status](https://travis-ci.org/CodeCutterUK/seafile-docker-pi.svg?branch=master)](https://travis-ci.org/CodeCutterUK/seafile-docker-pi)
+
+### About this fork
+
+This fork is a fork of the [seafile-docker](https://github.com/haiwen/seafile-docker) repo, expect for two important elements:
+ 1. Produces a multi-arch docker image which at this point only includes ARMv7, but could easily support AMD64. ARM64 seems to be have some issues with MariaDB that I'm yet to fully understand....PRs very welcome
+ 2. Only requires a single container when running, unlike the latest official docker image which now splits out MariaDB and Memcache. Clearly pros and cons for both, my preference is to have a single image.
+
 
 ### About
 

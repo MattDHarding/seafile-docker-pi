@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=7.0.5
+version=9.0.2
 image_name=codecutteruk/seafile
 set -e -x
 ./ci/install_deps.sh

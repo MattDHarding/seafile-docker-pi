@@ -1,15 +1,15 @@
-ARG BASE_IMAGE=codecutteruk/seafile-base:18.04
+ARG BASE_IMAGE=codecutteruk/seafile-base:20.04
 FROM $BASE_IMAGE
 WORKDIR /opt/seafile
 
 RUN mkdir -p /etc/my_init.d
 
-ARG SEAFILE_VERSION=7.0.5
+ARG SEAFILE_VERSION=9.0.2
 ENV SEAFILE_VERSION=${SEAFILE_VERSION}
 ENV SEAFILE_SERVER=seafile-server
 
 RUN mkdir -p /opt/seafile/ && \
-    curl -sSL -o - https://github.com/haiwen/seafile-rpi/releases/download/v${SEAFILE_VERSION}/seafile-server_${SEAFILE_VERSION}_stable_pi.tar.gz \
+    curl -sSL -o - https://github.com/haiwen/seafile-rpi/releases/download/v${SEAFILE_VERSION}/seafile-server-${SEAFILE_VERSION}-focal-arm32v7l.tar.gz \
     | tar xzf - -C /opt/seafile/
 
 ADD scripts/create_data_links.sh /etc/my_init.d/01_create_data_links.sh

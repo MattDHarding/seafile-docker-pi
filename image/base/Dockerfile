@@ -1,4 +1,4 @@
-# Lastet phusion baseimage as of 20180412, based on ubuntu 18.04
+# Lastet phusion baseimage as of 20210417, based on ubuntu 20.04
 # See https://hub.docker.com/r/phusion/baseimage/tags/
 FROM phusion/baseimage:master
 
@@ -7,7 +7,7 @@ ENV UPDATED_AT=20190803 \
 
 CMD ["/sbin/my_init", "--", "bash", "-l"]
 
-RUN apt-get update -qq && apt-get -qq -y install memcached mariadb-server nginx
+RUN apt-get update -qq && apt-get -qq -y install memcached mariadb-server nginx libc6 gcc libmemcached-dev libz-dev libjpeg-dev zlib1g-dev libmariadbclient-dev libffi-dev
 
 # Utility tools
 RUN apt-get install -qq -y vim htop net-tools psmisc git wget curl
@@ -15,11 +15,12 @@ RUN apt-get install -qq -y vim htop net-tools psmisc git wget curl
 # Guidline for installing python libs: if a lib has C-compoment (e.g.
 # python-imaging depends on libjpeg/libpng), we install it use apt-get.
 # Otherwise we install it with pip.
-RUN apt-get install -y python2.7-dev python-pil python-ldap python-mysqldb zlib1g-dev libmemcached-dev gcc
+RUN apt-get install -y python3-dev python-pil python3-ldap python3-mysqldb python3 python3-setuptools python3-pip python3-pymysql
 RUN curl -sSL -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py && \
-    python /tmp/get-pip.py && \
+    python3 /tmp/get-pip.py && \
     rm -rf /tmp/get-pip.py && \
-    pip install -U wheel
+    pip install -U wheel && \
+    pip install -U configparser
 
 ADD requirements.txt  /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt

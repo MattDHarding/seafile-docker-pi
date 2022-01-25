@@ -1,5 +1,5 @@
-SERVER_VERSION ?= 7.0.5
-BASE_IMAGE_VERSION ?= 18.04
+SERVER_VERSION ?= 9.0.2
+BASE_IMAGE_VERSION ?= 20.04
 PLATFORM ?= arm
 TAG_ARCH ?= arm
 
@@ -37,7 +37,7 @@ base:
 	cd base && docker build -t $(base_image_arch) --platform $(PLATFORM) .
 	docker-squash --tag $(base_image_squashed) $(base_image_arch)
 	docker tag $(base_image_squashed) $(base_image_arch)
-	docker rmi `docker images --filter "dangling=true" -q --no-trunc`
+	docker rmi -f `docker images --filter "dangling=true" -q --no-trunc`
 
 base-multiarch:
 	env NAME=$(base_image_name) VERSION=$(BASE_IMAGE_VERSION) ./build-multiarch.sh
@@ -47,7 +47,7 @@ server:
 	docker-squash --tag $(server_image_squashed) $(server_image_arch) --from-layer=$(base_image_arch)
 	docker tag $(server_image_squashed) $(server_image_arch)
 	docker tag $(server_image_arch) $(latest_server_image)
-	docker rmi `docker images --filter "dangling=true" -q --no-trunc`
+	docker rmi -f `docker images --filter "dangling=true" -q --no-trunc`
 
 server-multiarch:
 	env NAME=$(server_image_name) VERSION=$(SERVER_VERSION) ./build-multiarch.sh
